@@ -10,15 +10,33 @@ interface LoginReqPayload {
 	email: string,
 	password: string,
 }
-interface LoginResPayload {
+interface CheckMePayload {
 	email: string,
 }
 
+interface LoginResPayload {
+	email: string,
+	token: string,
+}
+
+
 export const login = createAsyncThunk('user/signIn', async (payload: LoginReqPayload) => {
-	console.log(">>>")
-	const a = await axios.post(`${BASE_API_URL}/auth/login/email`, payload);
-	const result = a.data;
-	console.log("result",result.data)
+	console.log("loginlogin",login)
+	const result = (await axios.post(`${BASE_API_URL}/auth/login/email`, payload)).data?.data;
+	console.log("result", result)
+	return result;
+})
+
+export const logout = createAsyncThunk('user/signOut', async () => {
+	const result = (await axios.post(`${BASE_API_URL}/me/user/logout`)).data?.success;
+	return result;
+})
+
+export const checkMe = createAsyncThunk('user/checkMe', async () => {
+	const token = localStorage.getItem('token');
+	axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+	const result = (await axios.get(`${BASE_API_URL}/me/user/info`)).data?.data;
+	console.log("result", result)
 	return result;
 })
 
@@ -31,15 +49,33 @@ export const userSlice = createSlice({
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
+		//login
 		builder.addCase(login.fulfilled, (state, action: PayloadAction<LoginResPayload>) => {
-			console.log("here!!")
-			state.userEmail = action.payload.email;
-			console.log(action.payload);
+			const { email, token } = action.payload;
+			axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+			state.userEmail = email;
 			state.error = '';
+			localStorage.setItem('token', token);
 		})
 		builder.addCase(login.rejected, (state, action) => {
 			state.userEmail = '';
 			state.error = action.error.message || "Error!";
+		})
+		//logout
+		builder.addCase(logout.fulfilled, (state, _) => {
+			state.userEmail = '';
+			localStorage.removeItem('token');
+			axios.defaults.headers.common['Authorization'] = '';
+		})
+		//checkMe
+		builder.addCase(checkMe.fulfilled, (state,action: PayloadAction<CheckMePayload>)=>{
+			const { email } = action.payload;
+			state.userEmail = email;
+		})
+		builder.addCase(checkMe.rejected, (state,_)=>{
+			axios.defaults.headers.common['Authorization'] = '';
+			localStorage.removeItem('token');
+			state.userEmail = '';
 		})
 	}
 })
