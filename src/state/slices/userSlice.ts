@@ -1,30 +1,49 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { BASE_API_URL } from '../../utils/constants';
+import axios from 'axios';
 interface UserState {
-	user: UserInfo
+	userEmail: string,
+	error: string,
 }
 
-interface UserInfo {
-	userId: string,
-
+interface LoginReqPayload {
+	email: string,
+	password: string,
+}
+interface LoginResPayload {
+	email: string,
 }
 
-const initialState = {
-	userInfo: null,
+export const login = createAsyncThunk('user/signIn', async (payload: LoginReqPayload) => {
+	console.log(">>>")
+	const a = await axios.post(`${BASE_API_URL}/auth/login/email`, payload);
+	const result = a.data;
+	console.log("result",result.data)
+	return result;
+})
+
+const initialState: UserState = {
+	userEmail: '',
+	error: ''
 }
 export const userSlice = createSlice({
 	name: "user",
 	initialState,
-	reducers: {
-		login:(state, action: PayloadAction<string>)=>{
-			state.userId.push(action.payload)
-		},
-		logout: (state) =>{
-			state.userId = null,
-		}
+	reducers: {},
+	extraReducers: (builder) => {
+		builder.addCase(login.fulfilled, (state, action: PayloadAction<LoginResPayload>) => {
+			console.log("here!!")
+			state.userEmail = action.payload.email;
+			console.log(action.payload);
+			state.error = '';
+		})
+		builder.addCase(login.rejected, (state, action) => {
+			state.userEmail = '';
+			state.error = action.error.message || "Error!";
+		})
 	}
 })
 
-export const {login, logout} = userSlice.actions
+// export const { login, logout } = userSlice.actions
 
 export default userSlice.reducer

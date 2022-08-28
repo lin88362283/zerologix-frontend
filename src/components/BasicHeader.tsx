@@ -2,23 +2,24 @@ import logo from '../assets/logo.png';
 import Messages from '../utils/Messages';
 import { DownOutlined } from '@ant-design/icons';
 import styles from "./BasicHeader.module.scss";
-import { useSelector,useDispatch } from 'react-redux';
+import { useAppSelector,useAppDispatch } from '../state/hooks';
 import { RootState } from "../state/store";
-import { logout } from "../state/slices/userSlice";
+// import { logout } from "../state/slices/userSlice";
 import { Link } from 'react-router-dom';
 
 interface BasicHeaderTypes {
-	name: string
+	
 }
 
-const BasicHeader = ({ name }: BasicHeaderTypes) => {
-	const dispatch = useDispatch()
-	const userId = useSelector((state: RootState) => state.users.userId)
-	const handleLogin = () => {
+const BasicHeader = () => {
+	const dispatch = useAppDispatch()
+	const userEmail = useAppSelector((state: RootState) => state.users.userEmail)
+	// const handleLogin = () => {
 
-	}
+	// }
+	console.log("userEmail",userEmail)
 	const handleLogout = () => {
-		dispatch(logout())
+		// dispatch(logout())
 	}
 	const renderNavList = () => {
 		const navTitles = [
