@@ -24,6 +24,7 @@ enum Messages {
 	FORM_GET_CODE = "Get Code",
 	REGISTER = "Register",
 	REGISTER_NOW = "Register Now",
+	UNREGISTER = 'Unregister',
 }
 
 export default Messages;
