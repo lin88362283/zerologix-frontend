@@ -1,12 +1,23 @@
 import React, { useState } from "react";
 import Messages from "../utils/Messages";
 import styles from "./WebinarRegisterForm.module.scss";
+import { useAppSelector, useAppDispatch } from "../state/hooks";
+import { RootState } from "../state/store";
+import { registerPost } from "../state/slices/postSlice";
+
+
 const WebinarRegisterForm = () => {
+	const dispatch = useAppDispatch()
 	const [email, setEmail] = useState("");
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
-	const handleSubmit = (e:React.MouseEvent) => {
+	const [selectedPost, setSelectedPost] = useState("1");
+	const posts = useAppSelector((state: RootState) => state.posts.posts.data)
+	const unfavPosts = posts?.filter(post => !post.favourited);
+
+	const handleSubmit = (e: React.MouseEvent) => {
 		e.preventDefault();
+		dispatch(registerPost({ id: selectedPost }))
 	}
 
 	const checkEmail = (email: string) => {
@@ -20,7 +31,7 @@ const WebinarRegisterForm = () => {
 	const checkPassStatus = () => {
 		return checkEmail(email) && firstName && lastName ? true : false;
 	}
-	
+
 	return (
 		<form id="registerForm" className={styles.webinar__registerForm}>
 			<div className={styles.form__header}>
@@ -32,7 +43,13 @@ const WebinarRegisterForm = () => {
 				</p>
 			</div>
 			<label>{Messages.FORM_TOPIC}</label>
-			<select></select>
+			<select onChange={(e) => setSelectedPost(e.target.value)}>{unfavPosts?.map((post) => {
+				return (
+					<option key={post.id} value={post.id}>
+						{post.title}
+					</option>
+				)
+			})}</select>
 			<label>{Messages.FORM_FIRST_NAME}</label>
 			{firstName === "" && <p className={styles['form__alert--red']} > {Messages.ALERT_FIRST_NAME}</p>}
 			<input required onChange={e => setFirstName(e.target.value)}></input>

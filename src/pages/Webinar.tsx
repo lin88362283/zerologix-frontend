@@ -13,11 +13,11 @@ const Webinar = () => {
 	const posts = useAppSelector((state: RootState) => state.posts.posts.data)
 	console.log("posts", posts);
 
-	const favPosts = posts?.filter(post => !post.favourited);
+	const unfavPosts = posts?.filter(post => !post.favourited);
 	const userEmail = useAppSelector((state: RootState) => state.users.userEmail);
 
 	useEffect(() => {
-		dispatch(getPosts());
+		dispatch(getPosts({page: 1}));
 	}, [])
 	return (
 		<>
@@ -30,7 +30,7 @@ const Webinar = () => {
 				</p>
 			</section>
 			<section>
-				<BasicList posts={favPosts} userEmail={userEmail} registered={false} />
+				<BasicList posts={unfavPosts} userEmail={userEmail} registered={false} />
 			</section>
 			<section className={styles.webinar__meetYourHost}>
 				<h3>

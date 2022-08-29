@@ -25,31 +25,48 @@ interface PostsWithPagination {
 }
 
 interface PostState {
-	posts: PostsWithPagination
+	posts: PostsWithPagination,
+	registeredPosts: Post[]
 }
 
+interface RegisterPostReqPayload {
+	id: string,
+}
+interface GetpostsReqPayload {
+	page: number
+}
+interface UnregisterPostReqPayload {
+	id: string
+}
 
-export const getPosts = createAsyncThunk('post/getPosts', async (page: number = 1) => {
-	const result = (await axios.get(`${BASE_API_URL}/post/analysis?per_page=12&page=${page}`)).data?.data;
+export const getPosts = createAsyncThunk('post/getPosts', async (payload: GetpostsReqPayload) => {
+	const result = (await axios.get(`${BASE_API_URL}/post/analysis?per_page=12&page=${payload.page}`)).data?.data;
+	return result;
+})
+
+export const getRegisteredPosts = createAsyncThunk('post/getRegisteredPosts', async () => {
+	const result = (await axios.get(`${BASE_API_URL}/me/user/favourite/post-analysis`)).data?.data;
 	console.log("result", result)
 	return result;
 })
 
-// export const logout = createAsyncThunk('user/signOut', async () => {
-// 	const result = (await axios.post(`${BASE_API_URL}/me/user/logout`)).data?.success;
-// 	return result;
-// })
 
-// export const checkMe = createAsyncThunk('user/checkMe', async () => {
-// 	const token = localStorage.getItem('token');
-// 	axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-// 	const result = (await axios.get(`${BASE_API_URL}/me/user/info`)).data?.data;
-// 	console.log("result", result)
-// 	return result;
-// })
+export const unregisterPost = createAsyncThunk('post/unregisterPost', async (payload: UnregisterPostReqPayload) => {
+	const result = (await axios.delete(`${BASE_API_URL}/me/user/favourite/post-analysis/${payload.id}`)).data?.data;
+	console.log("result", result);
+	return result;
+})
+
+export const registerPost = createAsyncThunk('post/registerPost', async (payload: RegisterPostReqPayload) => {
+	const result = (await axios.post(`${BASE_API_URL}/me/user/favourite/post-analysis/${payload.id}`)).data?.data;
+	console.log("result", result);
+	return result;
+})
+
 
 const initialState: PostState = {
-	posts: {}
+	posts: {},
+	registeredPosts: []
 }
 export const postSlice = createSlice({
 	name: "post",
@@ -60,29 +77,16 @@ export const postSlice = createSlice({
 		builder.addCase(getPosts.fulfilled, (state, action: PayloadAction<PostsWithPagination>) => {
 			state.posts = action.payload;
 		})
-		// builder.addCase(login.rejected, (state, action) => {
-		// 	state.userEmail = '';
-		// 	state.error = action.error.message || "Error!";
-		// })
-		// //logout
-		// builder.addCase(logout.fulfilled, (state, _) => {
-		// 	state.userEmail = '';
-		// 	localStorage.removeItem('token');
-		// 	axios.defaults.headers.common['Authorization'] = '';
-		// })
-		// //checkMe
-		// builder.addCase(checkMe.fulfilled, (state,action: PayloadAction<CheckMePayload>)=>{
-		// 	const { email } = action.payload;
-		// 	state.userEmail = email;
-		// })
-		// builder.addCase(checkMe.rejected, (state,_)=>{
-		// 	axios.defaults.headers.common['Authorization'] = '';
-		// 	localStorage.removeItem('token');
-		// 	state.userEmail = '';
-		// })
+		builder.addCase(getRegisteredPosts.fulfilled, (state, action: PayloadAction<Post[]>) => {
+			state.registeredPosts = action.payload;
+		})
+		builder.addCase(unregisterPost.fulfilled, (state, action: PayloadAction<Post[]>) => {
+			state.registeredPosts = action.payload;
+		})
+		builder.addCase(registerPost.fulfilled, (state, action: PayloadAction<PostsWithPagination>) => {
+			state.posts = action.payload;
+		})
 	}
 })
-
-// export const { login, logout } = userSlice.actions
 
 export default postSlice.reducer

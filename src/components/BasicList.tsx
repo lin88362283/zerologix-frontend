@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Messages from "../utils/Messages";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
-import { getPosts, Post } from "../state/slices/postSlice";
+import { getPosts, Post, unregisterPost } from "../state/slices/postSlice";
 import { setCurrentFormTopic } from "../state/slices/formSlice";
 import { RootState } from "../state/store";
 import styles from './BasicList.module.scss';
@@ -28,18 +28,18 @@ const BasicList = ({ posts, userEmail, registered }: BasicListProps) => {
 	const renderRegisterNow = (title: string) => {
 		dispatch(setCurrentFormTopic(title))
 		const destination = userEmail ? { pathname: "/webinar", hash: "#registerForm" } : { pathname: '/login' };
-		return (<Link to={destination} >{Messages.REGISTER_NOW}</Link>)
+		return (<Link className={styles.registerButton} to={destination} >{Messages.REGISTER_NOW}</Link>)
 	}
 
 	const renderUnregister = (post: Post) => (
-		<button onClick={() => handleUnregister(post)}>
+		<button className={styles.registerButton} onClick={() => handleUnregister(post)}>
 			{Messages.UNREGISTER}
 		</button>
 	)
-	type PostType = Post | {};
-	const handleUnregister = (post: PostType) => {
-
+	const handleUnregister = (post: Post) => {
+		dispatch(unregisterPost({ id: post.id }))
 	}
+	console.log("posts", posts)
 	return (
 		<ul className={styles.basicList}>
 			{posts?.map((post, index) => {

@@ -20,7 +20,7 @@ const WebinarDetails = () => {
 	}
 	useEffect(() => {
 		if (isEmpty(posts)) {
-			dispatch(getPosts());
+			dispatch(getPosts({ page: 1 }));
 		}
 	}, [])
 	const post = posts?.find((post) => String(post.id) === postId)
