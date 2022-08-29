@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
 import Messages from "../utils/Messages";
 import BasicList from "../components/BasicList";
-import WebinarRegisterForm from "../components/RegisterForm";
+import WebinarRegisterForm from "../components/WebinarRegisterForm";
 import styles from './Webinar.module.scss';
 import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { RootState } from "../state/store";
 import { getPosts } from "../state/slices/postSlice";
+import { RightOutlined } from '@ant-design/icons';
 
 const Webinar = () => {
 	const dispatch = useAppDispatch()
-	const posts = useAppSelector((state: RootState) => state.posts.posts).filter(post=>!post.favourited);
+	const posts = useAppSelector((state: RootState) => state.posts.posts.data)
+	console.log("posts", posts);
+
+	const favPosts = posts?.filter(post => !post.favourited);
 	const userEmail = useAppSelector((state: RootState) => state.users.userEmail);
 
 	useEffect(() => {
@@ -17,7 +21,7 @@ const Webinar = () => {
 	}, [])
 	return (
 		<>
-			<section className={styles.introduction}>
+			<section className={styles.webinar__introduction}>
 				<h2>
 					{Messages.WEBINAR_TITLE}
 				</h2>
@@ -26,22 +30,25 @@ const Webinar = () => {
 				</p>
 			</section>
 			<section>
-				<BasicList posts={posts} userEmail={userEmail} registered={false} />
+				<BasicList posts={favPosts} userEmail={userEmail} registered={false} />
 			</section>
-			<section>
+			<section className={styles.webinar__meetYourHost}>
 				<h3>
 					{Messages.MEET_YOUR_HOST_TITLE}
 				</h3>
-				<p>
-					{Messages.MEET_YOUR_HOST_DESCRIPTION_1}
-				</p>
-				<p>
-					{Messages.MEET_YOUR_HOST_DESCRIPTION_2}
-				</p>
-				<p>
-					{Messages.MEET_YOUR_HOST_DESCRIPTION_3}
-				</p>
+				<article>
+					<p>
+						{Messages.MEET_YOUR_HOST_DESCRIPTION_1}
+					</p>
+					<p>
+						{Messages.MEET_YOUR_HOST_DESCRIPTION_2}
+					</p>
+					<p>
+						{Messages.MEET_YOUR_HOST_DESCRIPTION_3}
+					</p>
+				</article>
 				<span>{Messages.SEE_MORE}</span>
+				<RightOutlined />
 			</section>
 			<section>
 				<WebinarRegisterForm />

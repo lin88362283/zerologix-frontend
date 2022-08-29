@@ -1,19 +1,43 @@
-.introduction {
-	padding-top: 50px;
-	text-align: center;
-	h2 {
-		font-size: 28px;
-		font-weight: 500;
-		line-height: 40px;
-		letter-spacing: 0px;
-		color: rgba(1, 37, 79, 1);
+.webinar {
+	&__introduction {
+		padding-top: 50px;
+		text-align: center;
+		h2 {
+			font-size: 28px;
+			font-weight: 500;
+			line-height: 40px;
+			letter-spacing: 0px;
+			color: rgba(1, 37, 79, 1);
+		}
+		p {
+			padding: 0 100px;
+			color: rgba(0, 0, 0, 0.65);
+			font-weight: 400;
+			font-size: 16px;
+			line-height: 24px;
+		}
 	}
-	p {
-		padding: 0 100px;
+	&__meetYourHost {
+		width: 48%;
+		padding: 166px 0;
 		color: rgba(0, 0, 0, 0.65);
-		font-weight: 400;
-		font-size: 16px;
-		line-height: 24px;
+		h3 {
+			font-weight: 500;
+			font-size: 22px;
+			line-height: 30px;
+			color: rgba(1, 37, 79, 1);
+
+		}
+		p {
+			font-weight: 400;
+			font-size: 16px;
+			line-height: 24px;
+		}
+		article {
+			padding-bottom: 10px;
+		}
+		span:last-child {
+			padding-left: 5px;
+		}
 	}
-	// text-align: center;
 }

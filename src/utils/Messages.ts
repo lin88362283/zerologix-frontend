@@ -25,6 +25,9 @@ enum Messages {
 	REGISTER = "Register",
 	REGISTER_NOW = "Register Now",
 	UNREGISTER = 'Unregister',
+	ALERT_FIRST_NAME = 'Please type your first name',
+	ALERT_LAST_NAME = 'Please type your last name',
+	ALERT_EMAIL = 'Please type correct email',
 }
 
 export default Messages;

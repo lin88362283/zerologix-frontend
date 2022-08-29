@@ -1,0 +1,124 @@
+.webinar__registerForm {
+	text-align: left;
+	box-shadow: 0px 4px 14px 0px rgba(132, 132, 132, 0.5);
+	border: 1px solid rgba(219, 219, 219, 1);
+	border-radius: 20px;
+	padding: 80px 260px;
+	margin-bottom: 144px;
+	font-family: "PingFang SC";
+	h3 {
+		font-weight: 500;
+		font-size: 22px;
+		line-height: 30px;
+		color: rgba(1, 37, 79, 1);
+	}
+	p {
+		padding: 0 10px 24px 10px;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 24px;
+		color: rgba(0, 0, 0, 0.65);
+	}
+	label {
+		display: inline;
+		text-align: left;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 22px;
+		color: #4a4a4a;
+	}
+	input {
+		margin: 8px 0 20px 0;
+		padding: 9px 1.5%;
+		display: inline-block;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 22px;
+		width: 97%;
+		color: #333333;
+		border: 1px solid #c6c6c6;
+		border-radius: 4px;
+	}
+	button {
+	}
+	select {
+		min-height: 52px;
+		border: 1px solid #c6c6c6;
+		border-radius: 4px;
+		width: 100%;
+		appearance: none;
+		background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+		background-repeat: no-repeat;
+		background-position: right 1rem center;
+		background-size: 22px;
+		margin: 8px 0 20px 0;
+	}
+}
+
+.form {
+	&__submit {
+		width: 100%;
+		border: none;
+		border-radius: 4px;
+		padding: 18px 0;
+		background-color: #E9E9E9;
+	}
+	&__phone {
+		// width: 100%;
+		text-align: left;
+		width: 100%;
+		label {
+			display: block;
+		}
+		select {
+			display: inline;
+			width: auto;
+			min-width: 100px;
+			min-height: auto;
+			margin-right: 28px;
+			padding: 11px 0;
+		}
+		input {
+			display: inline;
+			width: auto;
+			min-width: calc(100% - 147px);
+			// display: inline;
+		}
+	}
+	&__header {
+		text-align: center;
+	}
+	&__mobileAuth {
+		width: 100%;
+		text-align: left;
+		label {
+			display: block;
+		}
+		button {
+			display: inline;
+			border: 1px solid #c6c6c6;
+			border-radius: 4px;
+			background-color: white;
+			width: auto;
+			min-width: 100px;
+			margin-right: 28px;
+			padding: 11px 0;
+			font-weight: 400;
+			font-size: 16px;
+			line-height: 22px;
+			color: #333333;
+			font-family: "PingFang SC";
+		}
+		input {
+			display: inline;
+			width: auto;
+			min-width: calc(100% - 147px);
+		}
+	}
+	&__alert {
+		&--red {
+			color: red !important;
+			display: inline;
+		}
+	}
+}

@@ -51,14 +51,16 @@ const BasicHeader = () => {
 					<img src={logo} alt="logo" />
 				</Link>
 				{renderNavList()}
-				<Link className={styles.header__loginButton} to="/login" >
-					{Messages.LOGIN}
-				</Link>
-				<button className={styles.header__logoutButton} onClick={handleLogout}>
-					{Messages.LOGOUT}
-				</button>
+				<span className={styles.header__buttonGroup}>
+					<Link className={styles.header__loginButton} to="/login" >
+						{Messages.LOGIN}
+					</Link>
+					<button className={styles.header__logoutButton} onClick={handleLogout}>
+						{Messages.LOGOUT}
+					</button>
+				</span>
 			</nav>
-		</header>
+		</header >
 	)
 }
 

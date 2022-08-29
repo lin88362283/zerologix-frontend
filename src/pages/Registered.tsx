@@ -5,7 +5,7 @@ import { RootState } from "../state/store";
 import { getPosts } from "../state/slices/postSlice";
 const Registered = () => {
 	const dispatch = useAppDispatch()
-	const posts = useAppSelector((state: RootState) => state.posts.posts);
+	const posts = useAppSelector((state: RootState) => state.posts.posts.data);
 	const userEmail = useAppSelector((state: RootState) => state.users.userEmail);
 
 	useEffect(() => {

@@ -7,10 +7,11 @@ import { RootState } from "../state/store";
 import styles from './BasicList.module.scss';
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
+import { RightCircleOutlined } from "@ant-design/icons";
 
 
 interface BasicListProps {
-	posts: Post[],
+	posts?: Post[],
 	userEmail: string,
 	registered: boolean
 }
@@ -41,25 +42,28 @@ const BasicList = ({ posts, userEmail, registered }: BasicListProps) => {
 	}
 	return (
 		<ul className={styles.basicList}>
-			{posts.map((post, index) => (
-				<li key={index}>
-					<span>
-						{dayjs(post.createdAt).format('DD/MM/YYYY')}
-					</span>
-					<h4>
-						{post.title}
-					</h4>
-					<p>
-						{post.content}
-					</p>
-					<span>
-						{dayjs(post.createdAt).add(10, 'day').format('YYYY/MM/dd hh:mm')}
-					</span>
-					{!registered && renderRegisterNow(post.title)}
-					{registered && renderUnregister(post)}
-					<Link to={`/webinar/${post.id}`}>
-					</Link>
-				</li>)
+			{posts?.map((post, index) => {
+				const { created_at, title, content, id } = post;
+				return (
+					<li key={index} className={styles.basicList__item}>
+						{created_at && <span className={styles.basicList__createdAt}>
+							{dayjs(created_at).format('DD/MM/YYYY')}
+						</span>}
+						<h4>{title}</h4>
+						<p>{content}</p>
+						{created_at && <span>
+							{dayjs(created_at).add(10, 'day').format('YYYY/MM/DD hh:mm')}
+						</span>}
+						<div className={styles.basicList__footer}>
+							{!registered && renderRegisterNow(title)}
+							{registered && renderUnregister(post)}
+							<Link to={`/webinar/${id}`}>
+								<RightCircleOutlined />
+							</Link>
+						</div>
+					</li>
+				)
+			}
 			)}
 			{/* <icon /> */}
 		</ul>
