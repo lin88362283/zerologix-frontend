@@ -1,3 +1,5 @@
+$small: 320px;
+
 .basicList {
 	background-color: rgba(242, 242, 242, 1);
 	// implement background color over container
@@ -9,6 +11,9 @@
 	flex-direction: column;
 	max-height: 800px;
 	flex-wrap: wrap;
+	@media screen and (max-width: $small) {
+		max-height: max-content;
+	}
 	&__item {
 		max-width: 300px;
 		border: 1px solid rgba(214, 214, 214, 1);
@@ -24,6 +29,9 @@
 		min-height: 280px;
 		min-width: 300px;
 		position: relative;
+		@media screen and (max-width: $small) {
+			min-width: 200px;
+		}
 	}
 	&__createdAt {
 		font-size: 14px;

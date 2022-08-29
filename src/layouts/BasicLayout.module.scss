@@ -1,4 +1,8 @@
+$small: 320px;
 .container {
 	padding: 0 360px;
 	font-family: "SF Pro Display";
+	@media screen and (max-width: $small) {
+		padding: 0 26px;
+	}
 }
