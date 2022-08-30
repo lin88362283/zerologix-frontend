@@ -21,9 +21,7 @@ interface LoginResPayload {
 
 
 export const login = createAsyncThunk('user/signIn', async (payload: LoginReqPayload) => {
-	console.log("loginlogin",login)
 	const result = (await axios.post(`${BASE_API_URL}/auth/login/email`, payload)).data?.data;
-	console.log("result", result)
 	return result;
 })
 
@@ -36,7 +34,6 @@ export const checkMe = createAsyncThunk('user/checkMe', async () => {
 	const token = localStorage.getItem('token');
 	axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 	const result = (await axios.get(`${BASE_API_URL}/me/user/info`)).data?.data;
-	console.log("result", result)
 	return result;
 })
 
@@ -79,7 +76,5 @@ export const userSlice = createSlice({
 		})
 	}
 })
-
-// export const { login, logout } = userSlice.actions
 
 export default userSlice.reducer

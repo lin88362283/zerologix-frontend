@@ -8,7 +8,6 @@ const Login = () => {
 	const dispatch = useAppDispatch();
 	const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		console.log("handleLogin")
 		dispatch(login({ email, password }));
 	}
 	return (

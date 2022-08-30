@@ -20,26 +20,50 @@ $small: 320px;
 				padding: 0 22px;
 			}
 		}
-			
 	}
 	&__meetYourHost {
-		width: 48%;
-		padding: 166px 0;
-		color: rgba(0, 0, 0, 0.65);
+		display: flex;
 		@media screen and (max-width: $small) {
-			width: 100%;
+			flex-direction: column;
 		}
+		&Text {
+			padding: 166px 100px 166px 0;
+			color: rgba(0, 0, 0, 0.65);
+			@media screen and (max-width: $small) {
+				width: 100%;
+				padding: 40px 0 20px 0;
+			}
+		}
+		img {
+			max-width: 500px;
+			max-height: 288px;
+			padding: 210px 0 166px 0;
+			@media screen and (max-width: $small) {
+				max-width: max-content;
+				width: 100%;
+				display: block;
+				padding-top: 0;
+				padding-bottom: 20px;
+			}
+		}
+
 		h3 {
 			font-weight: 500;
-			font-size: 22px;
+			font-size: 21px;
 			line-height: 30px;
 			color: rgba(1, 37, 79, 1);
-
+			@media screen and (max-width: $small) {
+				font-size: 18px;
+			}
 		}
 		p {
 			font-weight: 400;
-			font-size: 16px;
+			font-size: 15px;
 			line-height: 24px;
+			@media screen and (max-width: $small) {
+				font-size: 12px;
+				line-height: 20px;
+			}
 		}
 		article {
 			padding-bottom: 10px;

@@ -3,15 +3,10 @@ import Messages from '../utils/Messages';
 import { DownOutlined } from '@ant-design/icons';
 import styles from "./BasicHeader.module.scss";
 import { logout, checkMe } from "../state/slices/userSlice";
-import { useAppSelector, useAppDispatch } from '../state/hooks';
-import { RootState } from "../state/store";
-// import { logout } from "../state/slices/userSlice";
+import { useAppDispatch } from '../state/hooks';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
-interface BasicHeaderTypes {
-
-}
 
 const BasicHeader = () => {
 	const dispatch = useAppDispatch()
@@ -20,11 +15,6 @@ const BasicHeader = () => {
 			dispatch(checkMe())
 		}
 	}, [])
-	const userEmail = useAppSelector((state: RootState) => state.users.userEmail)
-	// const handleLogin = () => {
-
-	// }
-	console.log("userEmail", userEmail)
 	const handleLogout = () => {
 		dispatch(logout())
 	}

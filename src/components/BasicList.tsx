@@ -1,9 +1,6 @@
-import { useEffect } from "react";
 import Messages from "../utils/Messages";
-import { useAppDispatch, useAppSelector } from "../state/hooks";
-import { getPosts, Post, unregisterPost } from "../state/slices/postSlice";
-import { setCurrentFormTopic } from "../state/slices/formSlice";
-import { RootState } from "../state/store";
+import { useAppDispatch } from "../state/hooks";
+import { Post, unregisterPost } from "../state/slices/postSlice";
 import styles from './BasicList.module.scss';
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
@@ -18,15 +15,8 @@ interface BasicListProps {
 
 const BasicList = ({ posts, userEmail, registered }: BasicListProps) => {
 	const dispatch = useAppDispatch()
-	// const posts = useAppSelector((state: RootState) => state.posts.posts);
-	// const userEmail = useAppSelector((state: RootState) => state.users.userEmail);
-
-	// useEffect(() => {
-	// 	dispatch(getPosts());
-	// }, [])
 
 	const renderRegisterNow = (title: string) => {
-		dispatch(setCurrentFormTopic(title))
 		const destination = userEmail ? { pathname: "/webinar", hash: "#registerForm" } : { pathname: '/login' };
 		return (<Link className={styles.registerButton} to={destination} >{Messages.REGISTER_NOW}</Link>)
 	}
@@ -36,10 +26,11 @@ const BasicList = ({ posts, userEmail, registered }: BasicListProps) => {
 			{Messages.UNREGISTER}
 		</button>
 	)
+
 	const handleUnregister = (post: Post) => {
 		dispatch(unregisterPost({ id: post.id }))
 	}
-	console.log("posts", posts)
+
 	return (
 		<ul className={styles.basicList}>
 			{posts?.map((post, index) => {
@@ -63,9 +54,7 @@ const BasicList = ({ posts, userEmail, registered }: BasicListProps) => {
 						</div>
 					</li>
 				)
-			}
-			)}
-			{/* <icon /> */}
+			})}
 		</ul>
 	)
 }

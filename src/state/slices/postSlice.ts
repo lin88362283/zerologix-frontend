@@ -46,20 +46,17 @@ export const getPosts = createAsyncThunk('post/getPosts', async (payload: Getpos
 
 export const getRegisteredPosts = createAsyncThunk('post/getRegisteredPosts', async () => {
 	const result = (await axios.get(`${BASE_API_URL}/me/user/favourite/post-analysis`)).data?.data;
-	console.log("result", result)
 	return result;
 })
 
 
 export const unregisterPost = createAsyncThunk('post/unregisterPost', async (payload: UnregisterPostReqPayload) => {
 	const result = (await axios.delete(`${BASE_API_URL}/me/user/favourite/post-analysis/${payload.id}`)).data?.data;
-	console.log("result", result);
 	return result;
 })
 
 export const registerPost = createAsyncThunk('post/registerPost', async (payload: RegisterPostReqPayload) => {
 	const result = (await axios.post(`${BASE_API_URL}/me/user/favourite/post-analysis/${payload.id}`)).data?.data;
-	console.log("result", result);
 	return result;
 })
 
@@ -77,12 +74,15 @@ export const postSlice = createSlice({
 		builder.addCase(getPosts.fulfilled, (state, action: PayloadAction<PostsWithPagination>) => {
 			state.posts = action.payload;
 		})
+		//getRegisteredPosts
 		builder.addCase(getRegisteredPosts.fulfilled, (state, action: PayloadAction<Post[]>) => {
 			state.registeredPosts = action.payload;
 		})
+		//unregisterPost
 		builder.addCase(unregisterPost.fulfilled, (state, action: PayloadAction<Post[]>) => {
 			state.registeredPosts = action.payload;
 		})
+		//registerPost
 		builder.addCase(registerPost.fulfilled, (state, action: PayloadAction<PostsWithPagination>) => {
 			state.posts = action.payload;
 		})
